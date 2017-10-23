@@ -1,0 +1,62 @@
+chessboard {
+
+  .chessboard {
+    width: 300px;
+    height: 300px;
+    margin: 0px auto;
+  }
+
+  .field {
+    width: 35px;
+    height: 35px;
+    padding:2px;
+  }
+
+  .black {
+    background: black;
+  }
+
+  .white {
+    background: white;
+  }
+
+  .checker {
+    width:30px;
+    height:30px;
+  }
+
+
+  .white-pawn {
+    background:white;
+  }
+
+  .black-pawn {
+    background:yellow;
+
+  }
+
+  .white-rook {
+    background: purple;
+  }
+
+  .black-rook {
+    background: #2ec95c;
+  }
+
+  .white-knight {
+    background: #9eeeb6;
+  }
+
+  .black-knight {
+    background: #333333;
+  }
+
+  .white-bishop {
+    background: #141414;
+  }
+
+  .black-bishop {
+    background: #c5c5c5;
+  }
+
+}
