@@ -7,10 +7,12 @@
 </ion-header>
 
 <ion-content>
+  ID:{{ id }} SOCKET: {{ socket }}
   <ion-list>
-    <ion-item (click)="openAddPage()">
+
+    <ion-item *ngFor="let player of players" (click)="invitePlayer(player.id, player.socket)">
       <ion-icon name="ionic" item-start></ion-icon>
-      @ionicframework
+      {{player.name }} {{ player.status }}
     </ion-item>
   </ion-list>
 </ion-content>

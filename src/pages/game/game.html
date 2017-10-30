@@ -4,15 +4,13 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
 
-  <ion-navbar>
-    <ion-title>game</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-  <div id="board" style="width: 400px"></div>
-</ion-content>
+  <div id="time">{{ time }}</div>
+  <div id="round">{{ currentRound + 1}}/{{ round }}</div>
+  <div id="question">{{ start ? question.content : message }}</div>
+  <div *ngIf="start">
+  <div class="answer" (click)="answer('a')">{{ question.a }}</div>
+  <div class="answer" (click)="answer('b')">{{ question.b }}</div>
+  <div class="answer" (click)="answer('c')">{{ question.c }}</div>
+  <div class="answer" (click)="answer('d')">{{ question.d }}</div>
+  </div>
