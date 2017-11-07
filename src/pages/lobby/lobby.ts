@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import {NavController, AlertController, NavParams} from 'ionic-angular';
 import { GamePage } from "../game/game";
 import * as io from 'socket.io-client';
 import * as $ from 'jquery';
@@ -16,9 +16,16 @@ export class LobbyPage {
   socket: any;
   name: string;
   players: any;
+  rematch = false;
+  invite:any;
 
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
     this.io = io(this.endPoint);
+
+    if (navParams.data.invite) {
+      this.rematch = true;
+      this.invite = navParams.data.invite;
+    }
 
     this.io.on('welcome', (parameters) => {
       this.id = parameters.id;
@@ -47,8 +54,8 @@ export class LobbyPage {
     });
   }
 
-  invitePlayer(id, socket) {
-    if (this.getStatusById(id) == 0) {
+  invitePlayer(socket) {
+    if (this.getStatusBySocket(socket) == 0) {
       this.io.emit('invite', {
         'player1' : this.socket,
         'player2' : socket
@@ -84,6 +91,21 @@ export class LobbyPage {
         return player;
       }
     }
+  }
+
+  getPlayerBySocket(socket) {
+    for (let player of this.players) {
+
+      if (player.socket == socket) {
+        return player;
+      }
+    }
+  }
+
+  getStatusBySocket(socket) {
+    let player = this.getPlayerBySocket(socket);
+
+    return player.status;
   }
 
   getStatusById(id) {

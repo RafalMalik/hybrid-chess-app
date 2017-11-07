@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import * as $ from 'jquery';
 import * as io from 'socket.io-client';
+import { ResultsPage } from "../results/results";
 
 /**
  * Generated class for the GamePage page.
@@ -64,10 +65,15 @@ export class GamePage {
       if (results.status == 'draw') {
           console.log('kurwa kadlubki jest remis');
       } else {
+        let targetId;
         if (this.id == results.win) {
-          console.log('wygrales' + this.id);
+          this.navCtrl.push(ResultsPage, {
+            'results' : results.lose
+          });
         }  else {
-          console.log('przegralem' + this.id);
+          this.navCtrl.push(ResultsPage, {
+            'results' : results.win
+          });
         }
       }
     });

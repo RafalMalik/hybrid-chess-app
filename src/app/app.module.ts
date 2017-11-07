@@ -4,11 +4,10 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { AboutPage } from '../pages/about/about';
-import { TvPage } from '../pages/tv/tv';
 import { LobbyPage } from '../pages/lobby/lobby';
 import { TabsPage } from '../pages/tabs/tabs';
 import { GamePage } from '../pages/game/game';
-import { Chessboard } from '../components/chessboard/chessboard';
+import { ResultsPage} from "../pages/results/results";
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -17,11 +16,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   declarations: [
     MyApp,
     AboutPage,
-    TvPage,
     LobbyPage,
     TabsPage,
     GamePage,
-    Chessboard
+    ResultsPage
   ],
   imports: [
     BrowserModule,
@@ -31,10 +29,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   entryComponents: [
     MyApp,
     AboutPage,
-    TvPage,
     LobbyPage,
     GamePage,
-    TabsPage
+    TabsPage,
+    ResultsPage
   ],
   providers: [
     StatusBar,
