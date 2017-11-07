@@ -37,7 +37,8 @@ export class LobbyPage {
 
     this.io.on('init-game', (game) => {
       this.navCtrl.push(GamePage, {
-        id: game.id
+        id: game.id,
+        socketId: this.socket
       });
     });
 
