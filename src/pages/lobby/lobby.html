@@ -10,9 +10,9 @@
   ID:{{ id }} SOCKET: {{ socket }}
   <ion-list>
 
-    <ion-item *ngFor="let player of players" (click)="invitePlayer(player.socket)">
+    <ion-item *ngFor="let player of players" (click)="invitePlayer(player.id, player.socket)">
       <ion-icon name="ionic" item-start></ion-icon>
-      {{player.name }} {{ player.status }}
+      {{player.name }} {{ player.status }} {{ player.socket }}
     </ion-item>
   </ion-list>
 

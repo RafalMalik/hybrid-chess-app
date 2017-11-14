@@ -22,6 +22,8 @@ export class GamePage {
   io: any;
   id: any;
   currentRound: number;
+  socketId: any;
+  game: any;
   time: number;
   round: number;
   question: any;
@@ -34,8 +36,13 @@ export class GamePage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.io = io(this.endPoint);
 
-    console.log(navParams.data.id);
-    this.id = navParams.data.socketId;
+    console.log(navParams.data.game);
+
+    this.game = navParams.data.game;
+    this.id = navParams.data.playerId;
+    this.socketId = navParams.data.socketId;
+
+    console.log('GRa od id ' + this.game.id);
 
     this.currentRound = -1;
     this.points = 0;
@@ -60,8 +67,9 @@ export class GamePage {
       this.nextRound();
     });
 
-    this.io.on('end-game', (results) => {
-      console.log(results);
+    this.io.on('end-game', (parameters) => {
+      let results = parameters.results;
+      this.game = parameters.game;
       if (results.status == 'draw') {
           console.log('kurwa kadlubki jest remis');
       } else {
@@ -95,6 +103,8 @@ export class GamePage {
       this.start = false;
       this.message = 'Gra zakonczona. Oczekiwanie na pozostalych graczy';
       this.io.emit('end-game', {
+        'id' : this.game.id,
+        'playerId': this.id,
         'answers': this.answers,
         'points': this.points
       });

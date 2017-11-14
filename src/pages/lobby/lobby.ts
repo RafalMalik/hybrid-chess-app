@@ -16,16 +16,10 @@ export class LobbyPage {
   socket: any;
   name: string;
   players: any;
-  rematch = false;
-  invite:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
-    this.io = io(this.endPoint);
-
-    if (navParams.data.invite) {
-      this.rematch = true;
-      this.invite = navParams.data.invite;
-    }
+    this.id = -1;
+    this.io = io(this.endPoint, { query : "playerId=" + this.id });
 
     this.io.on('welcome', (parameters) => {
       this.id = parameters.id;
@@ -44,8 +38,12 @@ export class LobbyPage {
 
     this.io.on('init-game', (game) => {
       this.navCtrl.push(GamePage, {
-        id: game.id,
+        playerId: this.id,
+        game: game,
         socketId: this.socket
+      }).then(() => {
+        const index = this.navCtrl.getActive().index - 1;
+        this.navCtrl.remove(1, index);
       });
     });
 
@@ -54,11 +52,18 @@ export class LobbyPage {
     });
   }
 
-  invitePlayer(socket) {
-    if (this.getStatusBySocket(socket) == 0) {
+  invitePlayer(id, socket) {
+    console.log(id, socket);
+    if (this.getStatusById(id) == 0) {
       this.io.emit('invite', {
-        'player1' : this.socket,
-        'player2' : socket
+        'player1' : {
+          'id': this.id,
+          'socket': this.socket
+        },
+        'player2' : {
+          'id': id,
+          'socket': socket
+        }
       });
     } else {
       this.presentAlert();
@@ -129,19 +134,13 @@ export class LobbyPage {
           text: 'Odrzuc',
           role: 'cancel',
           handler: () => {
-            this.io.emit('discard', {
-              'player1' : players.player1,
-              'player2' : this.socket
-            });
+            this.io.emit('discard', players);
           }
         },
         {
           text: 'Akceptuj',
           handler: () => {
-            this.io.emit('join', {
-              'player1' : players.player1,
-              'player2' : this.socket
-            });
+            this.io.emit('join', players);
           }
         }
       ]
