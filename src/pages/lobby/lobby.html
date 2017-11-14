@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-  ID:{{ id }} SOCKET: {{ socket }}
+  ID:{{ playerId }} SOCKET: {{ socket }}
   <ion-list>
 
     <ion-item *ngFor="let player of players" (click)="invitePlayer(player.id, player.socket)">

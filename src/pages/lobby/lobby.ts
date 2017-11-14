@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {NavController, AlertController, NavParams} from 'ionic-angular';
-import { GamePage } from "../game/game";
+import {GamePage} from "../game/game";
 import * as io from 'socket.io-client';
 import * as $ from 'jquery';
 
@@ -11,24 +11,32 @@ import * as $ from 'jquery';
 export class LobbyPage {
 
   private endPoint = 'http://localhost:3000';
-  io:any;
-  id:any;
+  io: any;
+  playerId: any;
   socket: any;
   name: string;
   players: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
-    this.id = -1;
-    this.io = io(this.endPoint, { query : "playerId=" + this.id });
+    this.playerId = -1;
 
-    this.io.on('welcome', (parameters) => {
-      this.id = parameters.id;
+    if (this.navParams.data.playerId) {
+      this.playerId = this.navParams.data.playerId;
+    }
+    this.io = io(this.endPoint, {query: "playerId=" + this.playerId});
+
+    this.io.on('update-socket', (parameters) => {
       this.socket = parameters.socket;
     });
 
-    this.io.on('lobby', (players) =>  {
-      this.players = players.filter( (player) => {
-          return player.id !== this.id;
+    this.io.on('welcome', (parameters) => {
+      this.playerId = parameters.id;
+      this.socket = parameters.socket;
+    });
+
+    this.io.on('lobby', (players) => {
+      this.players = players.filter((player) => {
+        return player.id !== this.playerId;
       });
     });
 
@@ -38,7 +46,7 @@ export class LobbyPage {
 
     this.io.on('init-game', (game) => {
       this.navCtrl.push(GamePage, {
-        playerId: this.id,
+        playerId: this.playerId,
         game: game,
         socketId: this.socket
       }).then(() => {
@@ -56,11 +64,11 @@ export class LobbyPage {
     console.log(id, socket);
     if (this.getStatusById(id) == 0) {
       this.io.emit('invite', {
-        'player1' : {
-          'id': this.id,
+        'player1': {
+          'id': this.playerId,
           'socket': this.socket
         },
-        'player2' : {
+        'player2': {
           'id': id,
           'socket': socket
         }
@@ -75,7 +83,7 @@ export class LobbyPage {
   }
 
   getId() {
-    return this.id;
+    return this.playerId;
   }
 
   setStatus(id, status) {

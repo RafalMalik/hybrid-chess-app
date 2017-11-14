@@ -76,10 +76,12 @@ export class GamePage {
         let targetId;
         if (this.id == results.win) {
           this.navCtrl.push(ResultsPage, {
+            'playerId' : this.id,
             'results' : results.lose
           });
         }  else {
           this.navCtrl.push(ResultsPage, {
+            'playerId' : this.id,
             'results' : results.win
           });
         }
