@@ -6,15 +6,92 @@
 -->
 <ion-content>
 
+    <ion-row>
+      <ion-col>
+        1 of 2
+        {{ time }}
+      </ion-col>
+      <ion-col>
+        2 of 2
+        {{ currentRound + 1}}/{{ round }}
+      </ion-col>
 
-  <div id="time">{{ time }}</div>
-  <div id="round">{{ currentRound + 1}}/{{ round }}</div>
-  <div id="question">{{ start ? question.content : message }}</div>
-  <div *ngIf="start">
-  <div class="answer" (click)="answer('a')">{{ question.a }}</div>
-  <div class="answer" (click)="answer('b')">{{ question.b }}</div>
-  <div class="answer" (click)="answer('c')">{{ question.c }}</div>
-  <div class="answer" (click)="answer('d')">{{ question.d }}</div>
-  </div>
-  {{ game | json }}
+
+    </ion-row>
+    <ion-row *ngIf="start">
+      <ion-row>
+        <ion-col>
+          {{ start ? question.content : message }}
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col (click)="answer('a')">
+          {{ question.a ? question.a : '' }}
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col (click)="answer('b')">
+          {{ question.b ? question.b : '' }}
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col (click)="answer('c')">
+          {{ question.c ? question.c : '' }}
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col (click)="answer('d')">
+          {{ question.d ? question.d : '' }}
+        </ion-col>
+      </ion-row>
+    </ion-row>
+    <ion-content>
+      <ion-row responsive-sm>
+        <ion-col width-50>
+          <ion-card>
+            <ion-card-header padding-no>
+              Col 1, Card 1
+            </ion-card-header>
+            <div padding>Test content...</div>
+          </ion-card>
+          <ion-card>
+            <ion-card-header padding-no>
+              Col 1, Card 2
+            </ion-card-header>
+            <div padding>Test content...</div>
+          </ion-card>
+          <ion-card>
+            <ion-card-header padding-no>
+              Col 1, Card 3
+            </ion-card-header>
+            <div padding>Test content...</div>
+          </ion-card>
+        </ion-col>
+        <ion-col width-50>
+          <ion-card>
+            <ion-card-header padding-no>
+              Col 2, Card 1
+            </ion-card-header>
+            <div padding>Test content...</div>
+          </ion-card>
+          <ion-card>
+            <ion-card-header padding-no>
+              Col 2, Card 2
+            </ion-card-header>
+            <div padding>Test content...</div>
+          </ion-card>
+          <ion-card>
+            <ion-card-header padding-no>
+              Col 2, Card 3
+            </ion-card-header>
+            <div padding>Test content...</div>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-content>
+
 </ion-content>

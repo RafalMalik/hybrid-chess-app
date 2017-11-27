@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import * as $ from 'jquery';
 import * as io from 'socket.io-client';
-import { ResultsPage } from "../results/results";
+import {ResultsPage} from "../results/results";
 
 /**
  * Generated class for the GamePage page.
@@ -60,6 +60,8 @@ export class GamePage {
     });
 
     this.io.on('start-game', (parameters) => {
+      this.currentRound = -1;
+      this.points = 0;
       this.start = true;
       this.time = parameters.time;
       this.round = parameters.round;
@@ -71,18 +73,21 @@ export class GamePage {
       let results = parameters.results;
       this.game = parameters.game;
       if (results.status == 'draw') {
-          console.log('kurwa kadlubki jest remis');
+        this.navCtrl.push(ResultsPage, {
+          'playerId': this.id,
+          'results': 'draw'
+        });
       } else {
         let targetId;
         if (this.id == results.win) {
           this.navCtrl.push(ResultsPage, {
-            'playerId' : this.id,
-            'results' : results.lose
+            'playerId': this.id,
+            'results': results.lose
           });
-        }  else {
+        } else {
           this.navCtrl.push(ResultsPage, {
-            'playerId' : this.id,
-            'results' : results.win
+            'playerId': this.id,
+            'results': results.win
           });
         }
       }
@@ -105,7 +110,7 @@ export class GamePage {
       this.start = false;
       this.message = 'Gra zakonczona. Oczekiwanie na pozostalych graczy';
       this.io.emit('end-game', {
-        'id' : this.game.id,
+        'id': this.game.id,
         'playerId': this.id,
         'answers': this.answers,
         'points': this.points

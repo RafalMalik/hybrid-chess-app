@@ -21,9 +21,12 @@ export class LobbyPage {
     this.playerId = -1;
 
     if (this.navParams.data.playerId) {
+      console.log('jestem stary');
       this.playerId = this.navParams.data.playerId;
     }
     this.io = io(this.endPoint, {query: "playerId=" + this.playerId});
+
+    console.log(this.io);
 
     this.io.on('update-socket', (parameters) => {
       this.socket = parameters.socket;
@@ -35,6 +38,7 @@ export class LobbyPage {
     });
 
     this.io.on('lobby', (players) => {
+      console.log(players);
       this.players = players.filter((player) => {
         return player.id !== this.playerId;
       });
