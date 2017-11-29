@@ -72,25 +72,11 @@ export class GamePage {
     this.io.on('end-game', (parameters) => {
       let results = parameters.results;
       this.game = parameters.game;
-      if (results.status == 'draw') {
-        this.navCtrl.push(ResultsPage, {
-          'playerId': this.id,
-          'results': 'draw'
-        });
-      } else {
-        let targetId;
-        if (this.id == results.win) {
-          this.navCtrl.push(ResultsPage, {
-            'playerId': this.id,
-            'results': results.lose
-          });
-        } else {
-          this.navCtrl.push(ResultsPage, {
-            'playerId': this.id,
-            'results': results.win
-          });
-        }
-      }
+      this.navCtrl.push(ResultsPage, {
+        'playerId': this.id,
+        'results': parameters.results
+      });
+
     });
   }
 

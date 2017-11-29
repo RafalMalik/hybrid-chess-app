@@ -11,20 +11,11 @@
 
   <ion-list>
     <ion-item *ngFor="let player of players" (click)="invitePlayer(player.id, player.socket)">
-      <ion-icon name="leaf" item-start></ion-icon>
-      {{player.name }}  {{ player.socket }}
-      <ion-icon name="rose" item-end></ion-icon>
-    </ion-item>
-  </ion-list>
-
-  <ion-list>
-    <ion-item *ngFor="let player of players" (click)="invitePlayer(player.id, player.socket)">
       <ion-avatar item-start>
-        <img src="img/avatar-finn.png">
+        <img src="assets/imgs/logo.png">
       </ion-avatar>
-      <h2>Finn</h2>
-      <h3>Don't Know What To Do!</h3>
-      <p>I've had a pretty messed up day. If we just...</p>
+      <h2>{{ player.name }}</h2>
+      <h3>{{ player.socket }}</h3>
       {{ player.status }}
       <ion-icon name="ios-checkmark-circle" item-end *ngIf="player.status == 0"></ion-icon>
     </ion-item>
