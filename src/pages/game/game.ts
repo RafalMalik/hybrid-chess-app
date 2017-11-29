@@ -32,22 +32,18 @@ export class GamePage {
   points: number;
   answers: any;
   message: string;
+  settings: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.io = io(this.endPoint);
-
-    console.log(navParams.data.game);
-
     this.game = navParams.data.game;
     this.id = navParams.data.playerId;
     this.socketId = navParams.data.socketId;
-
-    console.log('GRa od id ' + this.game.id);
-
+    this.questions = this.game.questions;
+    this.settings = this.game.settings;
     this.currentRound = -1;
     this.points = 0;
     this.answers = [];
-    this.time = 30;
     this.message = 'Oczekiwanie na graczy';
 
     var x = setInterval(() => {
@@ -55,26 +51,20 @@ export class GamePage {
 
     }, 1000);
 
+    this.nextRound();
+
     this.io.on('waiting', (parameters) => {
       console.log('do kurwy nedzy');
     });
 
-    this.io.on('start-game', (parameters) => {
-      this.currentRound = -1;
-      this.points = 0;
-      this.start = true;
-      this.time = parameters.time;
-      this.round = parameters.round;
-      this.questions = parameters.questions;
-      this.nextRound();
-    });
 
     this.io.on('end-game', (parameters) => {
       let results = parameters.results;
+      console.log(results);
       this.game = parameters.game;
       this.navCtrl.push(ResultsPage, {
         'playerId': this.id,
-        'results': parameters.results
+        'results': parameters.res
       });
 
     });
