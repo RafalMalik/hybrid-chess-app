@@ -8,11 +8,11 @@
 
   <ion-row>
     <ion-col col-6>
-      <ion-card>
+      <ion-card class="card-time">
         <ion-card-header padding-no>
         Pozostały czas:
         </ion-card-header>
-        <div padding> {{ settings.time }}</div>
+        <div padding> {{ time }}</div>
       </ion-card>
     </ion-col>
     <ion-col col-6>
@@ -20,16 +20,23 @@
         <ion-card-header padding-no>
           Runda:
         </ion-card-header>
-        <div padding> {{ currentRound + 1}}/{{ settings.round }}</div>
+        <div padding> {{ currentRound + 1}}/{{ game.settings.round }}</div>
       </ion-card>
     </ion-col>
 
 
   </ion-row>
   <ion-row *ngIf="start">
-
-    <ion-col col-12 (click)="answer('a')">
+    <ion-col col-12>
       <ion-card>
+        <ion-card-header padding-no>
+          Pytanie:
+        </ion-card-header>
+        <div padding>{{ question.content ? question.content : '' }}</div>
+      </ion-card>
+    </ion-col>
+    <ion-col col-12 (click)="answer('a')">
+      <ion-card class="card-answer">
         <ion-card-header padding-no>
           Odpowiedź A
         </ion-card-header>
@@ -38,7 +45,7 @@
     </ion-col>
 
     <ion-col col-12 (click)="answer('b')">
-      <ion-card>
+      <ion-card class="card-answer">
         <ion-card-header padding-no>
           Odpowiedź B
         </ion-card-header>
@@ -47,7 +54,7 @@
     </ion-col>
 
     <ion-col col-12 (click)="answer('c')">
-      <ion-card>
+      <ion-card class="card-answer">
         <ion-card-header padding-no>
           Odpowiedź C
         </ion-card-header>
@@ -56,7 +63,7 @@
     </ion-col>
 
     <ion-col col-12 (click)="answer('d')">
-      <ion-card>
+      <ion-card class="card-answer">
         <ion-card-header padding-no>
           Odpowiedź D
         </ion-card-header>

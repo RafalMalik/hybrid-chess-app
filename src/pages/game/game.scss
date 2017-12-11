@@ -34,4 +34,12 @@ page-game {
     border:1px solid black;
     float:left;
   }
+
+  .card-answer:hover {
+    background:#81D4FA;
+  }
+
+  .card-time:hover {
+    background:blue;
+  }
 }

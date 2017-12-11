@@ -10,23 +10,21 @@ import * as $ from 'jquery';
 })
 export class LobbyPage {
 
-  private endPoint = 'http://localhost:3000';
-  io: any;
-  playerId: any;
-  socket: any;
-  name: string;
-  players: any;
+  private endPoint = 'ws://localhost:3000';
+  io;
+  playerId;
+  socket;
+  name;
+  players;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
     this.playerId = -1;
 
     if (this.navParams.data.playerId) {
-      console.log('jestem stary');
       this.playerId = this.navParams.data.playerId;
     }
     this.io = io(this.endPoint, {query: "playerId=" + this.playerId});
 
-    console.log(this.io);
 
     this.io.on('update-socket', (parameters) => {
       this.socket = parameters.socket;
@@ -38,18 +36,19 @@ export class LobbyPage {
     });
 
     this.io.on('lobby', (players) => {
-      console.log(players);
       this.players = players.filter((player) => {
         return player.id !== this.playerId;
       });
     });
 
     this.io.on('invite', (players) => {
+      console.log('dostaje dwa invite');
       this.openInviteConfirm(players);
     });
 
     this.io.on('init-game', (game) => {
       this.navCtrl.push(GamePage, {
+        io: this.io,
         playerId: this.playerId,
         game: game,
         socketId: this.socket
@@ -60,12 +59,15 @@ export class LobbyPage {
     });
 
     this.io.on('discard-invite', (players) => {
-      this.presentAlert();
+      this.presentAlert('Przepraszam', 'Uzytkownik odrzucil twoje zaproszenie');
+    });
+
+    this.io.on('rozga', (parameters) => {
     });
   }
 
   invitePlayer(id, socket) {
-    console.log(id, socket);
+    console.log('invituje zioma');
     if (this.getStatusById(id) == 0) {
       this.io.emit('invite', {
         'player1': {
@@ -78,7 +80,7 @@ export class LobbyPage {
         }
       });
     } else {
-      this.presentAlert();
+      this.presentAlert('Przepraszam', 'Uzytkownik prowadzi obecnie gre');
     }
   }
 
@@ -98,7 +100,6 @@ export class LobbyPage {
       }
     }
 
-    console.log(this.players);
   }
 
   getPlayerById(id) {
@@ -137,10 +138,9 @@ export class LobbyPage {
   }
 
   openInviteConfirm(players) {
-    console.log(players);
     const alert = this.alertCtrl.create({
       title: 'Zaproszenie do gry',
-      message: 'Do you want to buy this book?',
+      message: 'Uzytkownik ' + players.player1.name + ' zaprosił Cię do gry',
       buttons: [
         {
           text: 'Odrzuc',
@@ -160,11 +160,11 @@ export class LobbyPage {
     alert.present();
   }
 
-  presentAlert() {
+  presentAlert(title, subTitle) {
     const alert = this.alertCtrl.create({
-      title: 'Low battery',
-      subTitle: '10% of battery remaining',
-      buttons: ['Dismiss']
+      title: title,
+      subTitle: subTitle,
+      buttons: ['Zamknij']
     });
     alert.present();
   }

@@ -18,53 +18,62 @@ import {ResultsPage} from "../results/results";
 })
 export class GamePage {
 
-  private endPoint = 'http://localhost:3000/game';
   io: any;
-  id: any;
+  playerId: any;
   currentRound: number;
   socketId: any;
   game: any;
-  time: number;
-  round: number;
   question: any;
   questions: any;
   start: boolean;
   points: number;
   answers: any;
   message: string;
-  settings: any;
+  time:any;
+  timer: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.io = io(this.endPoint);
+    this.io = navParams.data.io;
     this.game = navParams.data.game;
-    this.id = navParams.data.playerId;
+    this.playerId = navParams.data.playerId;
     this.socketId = navParams.data.socketId;
+
     this.questions = this.game.questions;
-    this.settings = this.game.settings;
     this.currentRound = -1;
     this.points = 0;
     this.answers = [];
+    this.start = true;
+    this.time = this.game.settings.time;
     this.message = 'Oczekiwanie na graczy';
 
-    var x = setInterval(() => {
+
+    this.timer = setInterval(() => {
       this.time--;
+
+      if (this.time == -1) {
+
+        clearInterval(this.timer);
+
+        this.io.emit('end-time', {
+          'id': this.game.id,
+          'playerId': this.playerId,
+          'answers': this.answers,
+          'points': this.points
+        });
+      }
 
     }, 1000);
 
     this.nextRound();
 
-    this.io.on('waiting', (parameters) => {
-      console.log('do kurwy nedzy');
-    });
 
 
     this.io.on('end-game', (parameters) => {
-      let results = parameters.results;
-      console.log(results);
       this.game = parameters.game;
       this.navCtrl.push(ResultsPage, {
-        'playerId': this.id,
-        'results': parameters.res
+        'io': this.io,
+        'playerId': this.playerId,
+        'results': parameters.results
       });
 
     });
@@ -79,15 +88,16 @@ export class GamePage {
   }
 
   nextRound() {
-    if (this.currentRound < this.round - 1) {
+    if (this.currentRound < this.game.settings.round - 1) {
       this.currentRound++;
       this.question = this.questions[this.currentRound];
     } else {
       this.start = false;
+      clearInterval(this.timer);
       this.message = 'Gra zakonczona. Oczekiwanie na pozostalych graczy';
       this.io.emit('end-game', {
         'id': this.game.id,
-        'playerId': this.id,
+        'playerId': this.playerId,
         'answers': this.answers,
         'points': this.points
       });
