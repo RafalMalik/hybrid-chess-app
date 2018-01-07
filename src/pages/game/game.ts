@@ -31,12 +31,14 @@ export class GamePage {
   message: string;
   time:any;
   timer: any;
+  avatar: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.io = navParams.data.io;
     this.game = navParams.data.game;
     this.playerId = navParams.data.playerId;
     this.socketId = navParams.data.socketId;
+    this.avatar = navParams.data.avatar;
 
     this.questions = this.game.questions;
     this.currentRound = -1;
@@ -58,7 +60,9 @@ export class GamePage {
           'id': this.game.id,
           'playerId': this.playerId,
           'answers': this.answers,
-          'points': this.points
+          'points': this.points,
+          'time': this.time,
+          'avatar' : this.avatar
         });
       }
 
@@ -95,11 +99,15 @@ export class GamePage {
       this.start = false;
       clearInterval(this.timer);
       this.message = 'Gra zakonczona. Oczekiwanie na pozostalych graczy';
+      console.log(this.answers);
+
       this.io.emit('end-game', {
         'id': this.game.id,
         'playerId': this.playerId,
         'answers': this.answers,
-        'points': this.points
+        'points': this.points,
+        'time': this.time,
+        'avatar' : this.avatar
       });
     }
   }

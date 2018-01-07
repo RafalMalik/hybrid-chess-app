@@ -10,12 +10,13 @@ import * as $ from 'jquery';
 })
 export class LobbyPage {
 
-  private endPoint = 'ws://localhost:3000';
+  private endPoint = 'ws://localhost:3001';
   io;
   playerId;
   socket;
   name;
   players;
+  avatar;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
     this.playerId = -1;
@@ -33,6 +34,7 @@ export class LobbyPage {
     this.io.on('welcome', (parameters) => {
       this.playerId = parameters.id;
       this.socket = parameters.socket;
+      this.avatar  = parameters.avatar;
     });
 
     this.io.on('lobby', (players) => {
@@ -51,7 +53,8 @@ export class LobbyPage {
         io: this.io,
         playerId: this.playerId,
         game: game,
-        socketId: this.socket
+        socketId: this.socket,
+        avatar: this.avatar
       }).then(() => {
         const index = this.navCtrl.getActive().index - 1;
         this.navCtrl.remove(1, index);
@@ -62,12 +65,9 @@ export class LobbyPage {
       this.presentAlert('Przepraszam', 'Uzytkownik odrzucil twoje zaproszenie');
     });
 
-    this.io.on('rozga', (parameters) => {
-    });
   }
 
   invitePlayer(id, socket) {
-    console.log('invituje zioma');
     if (this.getStatusById(id) == 0) {
       this.io.emit('invite', {
         'player1': {

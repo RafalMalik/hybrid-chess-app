@@ -12,7 +12,7 @@
   <ion-list>
     <ion-item *ngFor="let player of players" (click)="invitePlayer(player.id, player.socket)">
       <ion-avatar item-start>
-        <img src="assets/imgs/logo.png">
+        <img src="{{ player.avatar }}">
       </ion-avatar>
       <h2>{{ player.name }}</h2>
       <h3>{{ player.socket }}</h3>
