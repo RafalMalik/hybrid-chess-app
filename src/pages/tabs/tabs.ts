@@ -10,8 +10,7 @@ import { LobbyPage } from '../lobby/lobby';
 export class TabsPage {
 
   tab1Root = LobbyPage;
-  tab2Root = TvPage;
-  tab3Root = AboutPage;
+  tab2Root = AboutPage;
 
   constructor() {
 
