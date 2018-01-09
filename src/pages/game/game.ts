@@ -32,6 +32,7 @@ export class GamePage {
   time:any;
   timer: any;
   avatar: any;
+  tabBarElement:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.io = navParams.data.io;
@@ -40,13 +41,14 @@ export class GamePage {
     this.socketId = navParams.data.socketId;
     this.avatar = navParams.data.avatar;
 
+    this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
+
     this.questions = this.game.questions;
     this.currentRound = -1;
     this.points = 0;
     this.answers = [];
     this.start = true;
     this.time = this.game.settings.time;
-    this.message = 'Oczekiwanie na graczy';
 
 
     this.timer = setInterval(() => {
@@ -70,8 +72,6 @@ export class GamePage {
 
     this.nextRound();
 
-
-
     this.io.on('end-game', (parameters) => {
       this.game = parameters.game;
       this.navCtrl.push(ResultsPage, {
@@ -81,10 +81,15 @@ export class GamePage {
       });
 
     });
+
   }
 
-  getIO() {
-    return this.io;
+  ionViewWillEnter() {
+    this.tabBarElement.style.display = 'none';
+  }
+
+  ionViewWillLeave() {
+    this.tabBarElement.style.display = 'flex';
   }
 
   ionViewDidLoad() {
