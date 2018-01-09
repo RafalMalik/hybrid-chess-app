@@ -1,13 +1,13 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Lobby
-    </ion-title>
-  </ion-navbar>
-</ion-header>
-
 <ion-content>
-  ID:{{ playerId }} SOCKET: {{ socket }}
+  <ion-row class="player-info">
+    <ion-col col-4>
+      <img src="{{ avatar }}" alt="Brak" class="circle-avatar">
+    </ion-col>
+    <ion-col col-8>
+      <h3 class="player-name">Player_{{ playerId }}</h3>
+      <h5>Status: <ion-icon name="ios-checkmark-circle"></ion-icon></h5>
+    </ion-col>
+  </ion-row>
 
   <ion-list>
     <ion-item *ngFor="let player of players" (click)="invitePlayer(player.id, player.socket)">
@@ -21,5 +21,4 @@
     </ion-item>
   </ion-list>
 
-  <button *ngIf="rematch" ion-button full (click)="invitePlayer(invite)">Full Button</button>
 </ion-content>

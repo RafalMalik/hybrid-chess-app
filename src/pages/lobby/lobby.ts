@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {NavController, AlertController, NavParams} from 'ionic-angular';
 import {GamePage} from "../game/game";
 import * as io from 'socket.io-client';
-import * as $ from 'jquery';
 
 @Component({
   selector: 'page-lobby',
@@ -10,7 +9,7 @@ import * as $ from 'jquery';
 })
 export class LobbyPage {
 
-  private endPoint = 'ws://localhost:3001';
+  private endPoint = 'ws://193.70.113.241:3001';
   io;
   playerId;
   socket;

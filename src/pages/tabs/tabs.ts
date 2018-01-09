@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import { AboutPage } from '../about/about';
-import { TvPage } from '../tv/tv';
 import { LobbyPage } from '../lobby/lobby';
 
 @Component({
