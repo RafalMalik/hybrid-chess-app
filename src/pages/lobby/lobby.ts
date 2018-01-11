@@ -16,6 +16,7 @@ export class LobbyPage {
   name;
   players;
   avatar;
+  invited = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
     this.playerId = -1;
@@ -43,8 +44,10 @@ export class LobbyPage {
     });
 
     this.io.on('invite', (players) => {
-      console.log('dostaje dwa invite');
-      this.openInviteConfirm(players);
+      if (!this.invited) {
+        this.invited = true;
+        this.openInviteConfirm(players);
+      }
     });
 
     this.io.on('init-game', (game) => {
@@ -145,12 +148,14 @@ export class LobbyPage {
           text: 'Odrzuc',
           role: 'cancel',
           handler: () => {
+            this.invited = false;
             this.io.emit('discard', players);
           }
         },
         {
           text: 'Akceptuj',
           handler: () => {
+            this.invited = false;
             this.io.emit('join', players);
           }
         }
