@@ -10,17 +10,15 @@
     <ion-col col-6>
       <ion-card class="card-time">
         <ion-card-header padding-no>
-        Pozostały czas:
+          <b>Czas:</b> {{ time }}
         </ion-card-header>
-        <div padding> {{ time }}</div>
       </ion-card>
     </ion-col>
     <ion-col col-6>
-      <ion-card>
+      <ion-card class="card-round">
         <ion-card-header padding-no>
-          Runda:
+          <b>Runda:</b> {{ currentRound + 1}}/{{ game.settings.round }}
         </ion-card-header>
-        <div padding> {{ currentRound + 1}}/{{ game.settings.round }}</div>
       </ion-card>
     </ion-col>
 
@@ -28,9 +26,9 @@
   </ion-row>
   <ion-row *ngIf="start">
     <ion-col col-12>
-      <ion-card>
+      <ion-card class="card-question">
         <ion-card-header padding-no>
-          Pytanie:
+          <b>Pytanie:</b>
         </ion-card-header>
         <div padding>{{ question.content ? question.content : '' }}</div>
       </ion-card>
@@ -38,40 +36,45 @@
     <ion-col col-12 (click)="answer('A')">
       <ion-card class="card-answer">
         <ion-card-header padding-no>
-          Odpowiedź A
+          <b>A)</b> {{ question.a ? question.a : '' }}
         </ion-card-header>
-        <div padding>{{ question.a ? question.a : '' }}</div>
       </ion-card>
     </ion-col>
 
     <ion-col col-12 (click)="answer('B')">
       <ion-card class="card-answer">
         <ion-card-header padding-no>
-          Odpowiedź B
+          <b>B)</b> {{ question.b ? question.b : '' }}
         </ion-card-header>
-        <div padding>{{ question.b ? question.b : '' }}</div>
       </ion-card>
     </ion-col>
 
     <ion-col col-12 (click)="answer('C')">
       <ion-card class="card-answer">
         <ion-card-header padding-no>
-          Odpowiedź C
+          <b>C)</b> {{ question.c ? question.c : '' }}
         </ion-card-header>
-        <div padding>{{ question.c ? question.c : '' }}</div>
       </ion-card>
     </ion-col>
 
     <ion-col col-12 (click)="answer('D')">
       <ion-card class="card-answer">
         <ion-card-header padding-no>
-          Odpowiedź D
+          <b>D)</b> {{ question.d ? question.d : '' }}
         </ion-card-header>
-        <div padding>{{ question.d ? question.d : '' }}</div>
       </ion-card>
     </ion-col>
 
+  </ion-row>
 
+  <ion-row *ngIf="!start">
+    <ion-col col-12>
+      <ion-card class="card-wait">
+        <ion-card-header padding-no>
+          Twój przeciwnik jeszcze gra...
+        </ion-card-header>
+      </ion-card>
+    </ion-col>
   </ion-row>
 
 </ion-content>

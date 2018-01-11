@@ -33,6 +33,7 @@ export class GamePage {
   timer: any;
   avatar: any;
   tabBarElement:any;
+  scrollContentElement;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.io = navParams.data.io;
@@ -42,6 +43,7 @@ export class GamePage {
     this.avatar = navParams.data.avatar;
 
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
+    this.scrollContentElement = document.querySelector('.scroll-content');
 
     this.questions = this.game.questions;
     this.currentRound = -1;
@@ -86,10 +88,12 @@ export class GamePage {
 
   ionViewWillEnter() {
     this.tabBarElement.style.display = 'none';
+    this.scrollContentElement.style.marginBottom = '0px !important';
   }
 
   ionViewWillLeave() {
     this.tabBarElement.style.display = 'flex';
+    this.scrollContentElement.style.marginBottom = '56px !important';
   }
 
   ionViewDidLoad() {

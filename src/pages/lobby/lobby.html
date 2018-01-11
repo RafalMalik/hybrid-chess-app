@@ -1,23 +1,30 @@
 <ion-content>
   <ion-row class="player-info">
     <ion-col col-4>
+      <div class="avatar-box">
       <img src="{{ avatar }}" alt="Brak" class="circle-avatar">
+      </div>
     </ion-col>
     <ion-col col-8>
       <h3 class="player-name">Player_{{ playerId }}</h3>
-      <h5>Status: <ion-icon name="ios-checkmark-circle"></ion-icon></h5>
+      <h5>Status: <ion-icon name="ios-checkmark-circle-outline"></ion-icon></h5>
     </ion-col>
   </ion-row>
 
+  <ion-row>
+    <ion-col class="player-list-info">
+      <h4>Liczba graczy: {{ players ? players.length : 0 }} </h4>
+    </ion-col>
+  </ion-row>
   <ion-list>
     <ion-item *ngFor="let player of players" (click)="invitePlayer(player.id, player.socket)">
       <ion-avatar item-start>
         <img src="{{ player.avatar }}">
       </ion-avatar>
       <h2>{{ player.name }}</h2>
-      <h3>{{ player.socket }}</h3>
-      {{ player.status }}
-      <ion-icon name="ios-checkmark-circle" item-end *ngIf="player.status == 0"></ion-icon>
+      <h3>S: {{ player.socket }}</h3>
+      <ion-icon name="ios-checkmark-circle-outline" item-end *ngIf="player.status == 0"></ion-icon>
+      <ion-icon name="ios-close" item-end *ngIf="player.status == 1"></ion-icon>
     </ion-item>
   </ion-list>
 
