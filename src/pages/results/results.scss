@@ -1,0 +1,35 @@
+page-results {
+
+  ion-card {
+    img {
+      width: 160px;
+      height: 160px;
+      margin: 0px auto;
+    }
+
+    h1 {
+      color: #fff !important;
+      text-align: center;
+      font-weight:bold !important;
+      margin-top:10px !important;
+    }
+  }
+
+  .card-win {
+    background: #2196f3;
+  }
+
+  .card-lose {
+    background: #F44336;
+  }
+
+  .card-draw {
+    background: #FFEB3B;
+  }
+
+  .btn-back-lobby {
+    background: #009688;
+    margin: 0px;
+  }
+
+}

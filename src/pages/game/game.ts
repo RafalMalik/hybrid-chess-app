@@ -42,8 +42,8 @@ export class GamePage {
     this.socketId = navParams.data.socketId;
     this.avatar = navParams.data.avatar;
 
-    this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
-    this.scrollContentElement = document.querySelector('.scroll-content');
+    //this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
+    //this.scrollContentElement = document.querySelector('.scroll-content');
 
     this.questions = this.game.questions;
     this.currentRound = -1;
@@ -57,9 +57,7 @@ export class GamePage {
       this.time--;
 
       if (this.time == -1) {
-
         clearInterval(this.timer);
-
         this.io.emit('end-time', {
           'id': this.game.id,
           'playerId': this.playerId,
@@ -86,20 +84,6 @@ export class GamePage {
 
   }
 
-  ionViewWillEnter() {
-    this.tabBarElement.style.display = 'none';
-    this.scrollContentElement.style.marginBottom = '0px !important';
-  }
-
-  ionViewWillLeave() {
-    this.tabBarElement.style.display = 'flex';
-    this.scrollContentElement.style.marginBottom = '56px !important';
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad GamePage');
-  }
-
   nextRound() {
     if (this.currentRound < this.game.settings.round - 1) {
       this.currentRound++;
@@ -107,8 +91,6 @@ export class GamePage {
     } else {
       this.start = false;
       clearInterval(this.timer);
-      this.message = 'Gra zakonczona. Oczekiwanie na pozostalych graczy';
-      console.log(this.answers);
 
       this.io.emit('end-game', {
         'id': this.game.id,
