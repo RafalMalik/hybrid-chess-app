@@ -1,0 +1,36 @@
+<ion-content padding>
+
+    <ion-row [ngSwitch]="result">
+      <ion-col col-12 *ngSwitchCase="0">
+        <ion-card padding class="card-draw">
+          <img src="assets/imgs/logo.png">
+          <h1>REMIS</h1>
+        </ion-card>
+
+      </ion-col>
+
+      <ion-col col-12 *ngSwitchCase="1">
+        <ion-card padding class="card-win">
+          <img src="assets/imgs/logo.png" >
+          <h1>WYGRAŁEŚ</h1>
+        </ion-card>
+      </ion-col>
+
+      <ion-col col-12 *ngSwitchCase="2">
+        <ion-card padding class="card-lose">
+          <img src="assets/imgs/logo.png" >
+          <h1>PRZEGRAŁEŚ</h1>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+
+  <ion-row>
+    <ion-col col-12>
+      <ion-card no-padding class="card-back-lobby">
+        <button ion-button full (click)="backToLobby()" class="btn-back-lobby">WRÓĆ DO LOBBY</button>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

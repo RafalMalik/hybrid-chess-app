@@ -88,12 +88,12 @@ export class GamePage {
 
   ionViewWillEnter() {
     this.tabBarElement.style.display = 'none';
-    this.scrollContentElement.style.marginBottom = '0px !important';
+    this.scrollContentElement.style.margin = '0px !important';
   }
 
   ionViewWillLeave() {
     this.tabBarElement.style.display = 'flex';
-    this.scrollContentElement.style.marginBottom = '56px !important';
+    this.scrollContentElement.style.margin = '56px !important';
   }
 
   ionViewDidLoad() {

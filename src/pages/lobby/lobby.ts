@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, AlertController, NavParams} from 'ionic-angular';
+import {NavController, AlertController, NavParams, App} from 'ionic-angular';
 import {GamePage} from "../game/game";
 import * as io from 'socket.io-client';
 
@@ -18,7 +18,7 @@ export class LobbyPage {
   avatar;
   invited = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+  constructor(public appCtrl: App, public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
     this.playerId = -1;
 
     if (this.navParams.data.playerId) {
